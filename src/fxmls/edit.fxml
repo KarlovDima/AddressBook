@@ -31,12 +31,12 @@
    <center>
       <VBox maxWidth="241.0" prefHeight="380.0" prefWidth="226.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField prefHeight="25.0" prefWidth="183.0">
+            <TextField fx:id="txtFIO" prefHeight="25.0" prefWidth="183.0">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <TextField>
+            <TextField fx:id="txtPhone">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -50,12 +50,12 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="OK">
+            <Button fx:id="btnOk" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="OK">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="100.0" text="Отмена">
+            <Button fx:id="btnCancel" mnemonicParsing="false" prefWidth="100.0" text="Отмена">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
