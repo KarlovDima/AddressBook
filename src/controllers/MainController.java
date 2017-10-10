@@ -67,6 +67,13 @@ public class MainController {
     }
 
     public void showDialog(ActionEvent actionEvent) {
+         Object source = actionEvent.getSource();
+
+         if(!(source instanceof Button))
+             return;
+
+         Button button=(Button) source;
+         Person person=(Person) tableAddressBook.getSelectionModel().getSelectedItem();
 
         try {
             Stage stage = new Stage();
