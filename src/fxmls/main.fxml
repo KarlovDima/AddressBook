@@ -44,8 +44,8 @@
          <children>
             <TableView fx:id="tableAddressBook" prefHeight="403.0" prefWidth="400.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="151.0" text="ФИО" />
-                <TableColumn prefWidth="149.0" text="Телефон" />
+                <TableColumn prefWidth="151.0" text="ФИО" fx:id="columnFIO"/>
+                <TableColumn prefWidth="149.0" text="Телефон" fx:id="columnPhone" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
