@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,8 +15,11 @@ import javafx.stage.Stage;
 import objects.Person;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable{
 
     private CollectionAddressBook collectionAddressBook = new CollectionAddressBook();
     private Stage mainStage;
@@ -51,19 +55,30 @@ public class MainController {
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private EditDialogController editDialogController;
     private Stage editDialogStage;
+    private ResourceBundle resourceBundle;
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
     }
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle=resources;
+
         columnFIO.setCellValueFactory(new PropertyValueFactory<Person, String>("fio"));
         columnPhone.setCellValueFactory(new PropertyValueFactory<Person, String>("phone"));
 
         initListeners();
         fillData();
         initLoader();
+    }
+
+    @FXML
+    private void changeLocale(ActionEvent event) throws IOException {
+        Scene scene = mainStage.getScene();
+        if (event.getSource().equals("en")) {
+            scene.setRoot(FXMLLoader.load(getClass().getResource("../fxmls/main.fxml"), ResourceBundle.getBundle("bundles.Locale", Locale.ENGLISH))); // = new Locale("en")
+        }
     }
 
     private void initListeners() {
@@ -81,6 +96,7 @@ public class MainController {
         try {
 
             fxmlLoader.setLocation(getClass().getResource("../fxmls/edit.fxml"));
+            fxmlLoader.setResources(resourceBundle);
             fxmlEdit = fxmlLoader.load();
             editDialogController = fxmlLoader.getController();
 
@@ -95,7 +111,7 @@ public class MainController {
     }
 
     private void updateCountLabel() {
-        labelCount.setText("Количество записей: " + collectionAddressBook.getPersonObservableList().size());
+        labelCount.setText(resourceBundle.getString("count")+":" + collectionAddressBook.getPersonObservableList().size());
     }
 
     public void actionButtonPressed(ActionEvent actionEvent) {
@@ -117,6 +133,12 @@ public class MainController {
                 showDialog();
                 break;
             case "btnDelete":
+                Scene scene =mainStage.getScene();
+                try {
+                    scene.setRoot(FXMLLoader.load(getClass().getResource("../fxmls/main.fxml"), ResourceBundle.getBundle("bundles.Locale", Locale.ENGLISH)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 collectionAddressBook.delete((Person) tableAddressBook.getSelectionModel().getSelectedItem());
                 break;
         }
