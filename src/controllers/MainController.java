@@ -1,7 +1,9 @@
 package controllers;
 
 import interfaces.impls.CollectionAddressBook;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +53,7 @@ public class MainController implements Initializable{
     @FXML
     private Label labelCount;
 
+    private ObservableList<Person> backupList;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private EditDialogController editDialogController;
@@ -71,14 +74,6 @@ public class MainController implements Initializable{
         initListeners();
         fillData();
         initLoader();
-    }
-
-    @FXML
-    private void changeLocale(ActionEvent event) throws IOException {
-        Scene scene = mainStage.getScene();
-        if (event.getSource().equals("en")) {
-            scene.setRoot(FXMLLoader.load(getClass().getResource("../fxmls/main.fxml"), ResourceBundle.getBundle("bundles.Locale", Locale.ENGLISH))); // = new Locale("en")
-        }
     }
 
     private void initListeners() {
@@ -107,6 +102,8 @@ public class MainController implements Initializable{
 
     private void fillData(){
         collectionAddressBook.fillTestData();
+        backupList= FXCollections.observableArrayList();
+        backupList.addAll(collectionAddressBook.getPersonObservableList());
         tableAddressBook.setItems(collectionAddressBook.getPersonObservableList());
     }
 
@@ -158,5 +155,14 @@ public class MainController implements Initializable{
             editDialogStage.initOwner(mainStage);
         }
         editDialogStage.showAndWait();
+    }
+
+    public void buttonSearchPressed(ActionEvent actionEvent){
+        collectionAddressBook.getPersonObservableList().clear();
+
+        for (Person person:backupList) {
+            if(person.getFio().toLowerCase().contains(txtSearch.getText().toLowerCase()) || person.getPhone().toLowerCase().contains(txtSearch.getText().toLowerCase()) )
+                collectionAddressBook.getPersonObservableList().add(person);
+        }
     }
 }
