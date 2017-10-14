@@ -126,8 +126,10 @@ public class MainController implements Initializable{
                 collectionAddressBook.add(editDialogController.getPerson());
                 break;
             case "btnEdit":
-                editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
-                showDialog();
+                if(isPersonSelected((Person) tableAddressBook.getSelectionModel().getSelectedItem())) {
+                    editDialogController.setPerson((Person) tableAddressBook.getSelectionModel().getSelectedItem());
+                    showDialog();
+                }
                 break;
             case "btnDelete":
                 Scene scene =mainStage.getScene();
@@ -155,6 +157,18 @@ public class MainController implements Initializable{
             editDialogStage.initOwner(mainStage);
         }
         editDialogStage.showAndWait();
+    }
+
+    private boolean isPersonSelected(Person person){
+        if (person == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ошибка");
+            alert.setHeaderText("");
+            alert.setContentText("Выберите запись");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
     public void buttonSearchPressed(ActionEvent actionEvent){
